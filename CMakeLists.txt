@@ -41,10 +41,10 @@ catkin_package(
   DEPENDS system_lib opencv
 )
 
-set(OPENNI2_DIR ~/OpenNI2)
+set(OPENNI2_DIR ~/dev/OpenNI-Linux-x64-2.2)
 set(OPENNI2_WRAPPER /opt/ros/indigo/include/openni2_camera/)
-set(NITE2_DIR ~/Openni2/NiTE-2.0.0/)
-set(NITE2_LIB ~/Openni2/NiTE-2.0.0/Redist/libNiTE2.so)
+set(NITE2_DIR ~/dev/NiTE-Linux-x64-2.2)
+set(NITE2_LIB ~/dev/NiTE-Linux-x64-2.2/Redist/libNiTE2.so)
 
 link_directories(${OPENNI2_DIR}/Bin/x64-Release)
 
@@ -56,6 +56,8 @@ include_directories(${NITE2_DIR}/Include)
 include_directories(${OpenCV_INCLUDE_DIRS}/include)
 
 add_executable(xtion_tracker src/xtion_tracker_node.cpp)
+add_dependencies(xtion_tracker ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(xtion_tracker OpenNI2 ${NITE2_LIB} ${OpenCV_LIBRARIES} ${catkin_LIBRARIES})
 add_executable(skeleton_tracker src/skeleton_tracker_node.cpp)
+add_dependencies(skeleton_tracker ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(skeleton_tracker OpenNI2 ${NITE2_LIB} ${OpenCV_LIBRARIES} ${catkin_LIBRARIES})
